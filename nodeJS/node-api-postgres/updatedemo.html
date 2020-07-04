@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Minimal working example</title>
+</head>
+
+<body>
+    <div id="app" style="display: flex; justify-content: center;">
+        <form id="form">
+            <label for="fname">Lugar</label>
+            <input type="text"  onkeypress="update()"  id="lugar" name="lugar"><br><br>
+            <label for="lname">Descripción</label>
+            <input type="text"  onkeypress="update()" id="descripcion" name="descripcion"><br><br>
+            <select name="falsa"  onchange="update()" id="falsa">
+                <option value="false">Alerta real</option>
+                <option value="true">Falsa alarma</option>
+            </select>
+            <br><br>
+            <select name="estado" onchange="update()" id="estado">
+                <option value="true">Continuar con la alerta</option>
+                <option value="false">Terminar alerta</option>
+            </select>
+            <br><br><br><br>
+            <input type="button" value="actualización manual de la base de datos" onclick="manualDataBaseUpdate()">
+        </form>
+    </div>
+
+
+    <script src="http://192.168.1.104:3000/socket.io/socket.io.js"></script>
+    
+    <script>
+        const socket = io();
+        
+        function update(){
+            let formData = new FormData(document.getElementById("form"));
+            let infoData = {
+                lugar: formData.get('lugar'),
+                descripcion: formData.get('descripcion'),
+                falsa: formData.get('falsa'),
+                estado: formData.get('estado')
+            }
+            socket.emit('update', infoData);
+        }
+        function manualDataBaseUpdate(){
+            socket.emit('manualDatabaseUpdate');
+        }
+       
+
+    </script>
+</body>
+
+</html>
