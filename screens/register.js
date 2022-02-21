@@ -1,8 +1,10 @@
 import React from "react";
 
+import RefinedPicker from "../shared/RefinedPicker";
 import DatePicker from "react-native-datepicker";
 
-import { Picker } from "@react-native-community/picker";
+
+import { phoneNumberOptions } from "../shared/variables/constants";
 import {
   Dimensions,
   StyleSheet,
@@ -52,20 +54,13 @@ export default class RegisterComponent extends React.Component {
           <Text style={styles.inputLabel}>NÚMERO DE TELÉFONO</Text>
           <View style={styles.phoneContainer}>
             <View style={styles.pickerContainer}>
-              <Picker
+              <RefinedPicker
                 selectedValue={this.state.selectedPhoneCode}
-                style={styles.picker}
                 onValueChange={(itemValue) => {
                   this.setState({ selectedPhoneCode: itemValue });
                 }}
-              >
-                <Picker.Item label="" value="" />
-                <Picker.Item label="0412" value="0412" />
-                <Picker.Item label="0414" value="0414" />
-                <Picker.Item label="0416" value="0416" />
-                <Picker.Item label="0424" value="0424" />
-                <Picker.Item label="0426" value="0426" />
-              </Picker>
+                options={phoneNumberOptions}
+              />
             </View>
             <View>
               <TextInput

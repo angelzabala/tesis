@@ -68,6 +68,7 @@ export default class statisticsScreenComponent extends React.Component {
       pk_alerta: alerta.pk_alerta,
     });
   };
+  
   reportListComponent = () => {
     if (this.state.reportes != "" && this.state.reportes.length != 0) {
       return (

@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import io from "socket.io-client/dist/socket.io";
 import * as Permissions from "expo-permissions";
 
@@ -70,7 +70,7 @@ export default class HomeComponent extends React.Component {
     this.state.navigation.navigate("groupDetail", groupInfo);
   };
 
-  circleLevelComponent = (nivel) => {
+  alertCircleTitle = (nivel) => {
     if (nivel == 1) {
       return <View style={styles.greenCircle}></View>;
     } else if (nivel == 2) {
@@ -87,19 +87,11 @@ export default class HomeComponent extends React.Component {
     var formattedHour = subHours(moment, 4); //recordar siempre quitarle 4 horas a la hora del servidor
     formattedHour = format(moment, "H:mma");
 
-    if (isFalse) {
-      return (
-        <Text style={styles.fakeLabel}>
-          {formattedDate} - {formattedHour} (falsa)
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.fakeLabel}>
-          {formattedDate} - {formattedHour}
-        </Text>
-      );
-    }
+    return (
+      <Text style={styles.fakeLabel}>
+        {formattedDate} - {formattedHour} {isFalse ? "(falsa)" : ""}
+      </Text>
+    );
   };
 
   alertPressHandler = (user, level, groups) => {
@@ -156,7 +148,7 @@ export default class HomeComponent extends React.Component {
               >
                 <View style={styles.recentAlertContainer}>
                   <View style={styles.recentAlertInfo}>
-                    {this.circleLevelComponent(item.nivel)}
+                    {this.alertCircleTitle(item.nivel)}
                     <Text style={styles.recentAlertText}>
                       {item.nombre} - {item.fk_usuario}
                     </Text>
@@ -318,7 +310,7 @@ const styles = StyleSheet.create({
     fontWeight: "100",
   },
   noAlertsText: {
-    fontSize: 20, 
+    fontSize: 20,
     textAlign: "left",
     fontWeight: "100",
     marginBottom: 30,

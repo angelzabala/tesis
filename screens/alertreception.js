@@ -1,6 +1,6 @@
 import React from "react";
 
-import MapView, { Marker } from "react-native-maps";
+import MapToLocation from "../shared/MapToLocation";
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
@@ -15,7 +15,6 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
-  Linking,
 } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
@@ -101,39 +100,6 @@ export default class alertScreenComponent extends React.Component {
     }
   };
 
-  mapComponent = () => {
-    if (this.state.nivel == 3) {
-      return (
-        <TouchableWithoutFeedback
-          onLongPress={() => {
-            Linking.openURL(
-              "https://google.com/maps/?q=" +
-                this.state.navigation.state.params.latitud +
-                "," +
-                this.state.navigation.state.params.longitud
-            );
-          }}
-        >
-          <MapView
-            style={styles.mapView}
-            initialRegion={{
-              latitude: this.state.navigation.state.params.latitud,
-              longitude: this.state.navigation.state.params.longitud,
-              latitudeDelta: 0.00922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker
-              coordinate={{
-                latitude: this.state.navigation.state.params.latitud,
-                longitude: this.state.navigation.state.params.longitud,
-              }}
-            />
-          </MapView>
-        </TouchableWithoutFeedback>
-      );
-    }
-  };
 
   eventExitHandler = () => {
     this.state.navigation.navigate("Home");
@@ -203,7 +169,7 @@ export default class alertScreenComponent extends React.Component {
               style={styles.regularInputText}
             />
           </View>
-          {this.mapComponent()}
+          <MapToLocation state={this.state} />
           <View>
             <Text style={styles.inputLabel}>Descripción</Text>
             <TextInput
@@ -243,13 +209,6 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     flexGrow: 1,
     justifyContent: "center",
-  },
-  mapView: {
-    flex: 1,
-    width: screenWidth * 0.8,
-    height: screenWidth * 0.6,
-    marginBottom: 20,
-    marginTop: 20,
   },
   exitAlert: {
     color: "#fff",

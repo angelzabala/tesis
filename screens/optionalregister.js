@@ -1,8 +1,13 @@
 import React from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RefinedPicker from "../shared/RefinedPicker";
 
-import { Picker } from "@react-native-community/picker";
+import {
+  phoneNumberOptions,
+  bloodTypeOptions,
+} from "../shared/variables/constants";
+import { postUsers } from "../actions/actions";
 import {
   StyleSheet,
   TextInput,
@@ -12,7 +17,6 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { postUsers } from "../actions/actions";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
@@ -68,43 +72,26 @@ export default class OptionalInfoComponent extends React.Component {
               <Text style={styles.inputLabel}>TIPO DE SANGRE: </Text>
             </View>
             <View style={styles.pickerContainer}>
-              <Picker
+              <RefinedPicker
                 selectedValue={this.state.selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
+                onValueChange={(itemValue) =>
                   this.setState({ selectedValue: itemValue })
                 }
-              >
-                <Picker.Item label="" value="" />
-                <Picker.Item label="A+" value="A+" />
-                <Picker.Item label="A-" value="A-" />
-                <Picker.Item label="B+" value="B+" />
-                <Picker.Item label="B-" value="B-" />
-                <Picker.Item label="AB+" value="AB+" />
-                <Picker.Item label="AB-" value="AB-" />
-                <Picker.Item label="O+" value="O+" />
-                <Picker.Item label="O-" value="O-" />
-              </Picker>
+                options={bloodTypeOptions}
+              />
             </View>
           </View>
 
           <Text style={styles.inputLabel}>CONTACTO DE EMERGENCIA 1</Text>
           <View style={styles.phoneContainer}>
             <View style={styles.pickerContainer}>
-              <Picker
+              <RefinedPicker
                 selectedValue={this.state.selectedPhone1}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
+                onValueChange={(itemValue) =>
                   this.setState({ selectedPhone1: itemValue })
                 }
-              >
-                <Picker.Item label="" value="" />
-                <Picker.Item label="0412" value="0412" />
-                <Picker.Item label="0414" value="0414" />
-                <Picker.Item label="0416" value="0416" />
-                <Picker.Item label="0424" value="0424" />
-                <Picker.Item label="0426" value="0426" />
-              </Picker>
+                options={phoneNumberOptions}
+              />
             </View>
             <View>
               <TextInput
@@ -119,20 +106,13 @@ export default class OptionalInfoComponent extends React.Component {
           <Text style={styles.inputLabel}>CONTACTO DE EMERGENCIA 2</Text>
           <View style={styles.phoneContainer}>
             <View style={styles.pickerContainer}>
-              <Picker
+              <RefinedPicker
                 selectedValue={this.state.selectedPhone2}
-                style={styles.picker}
                 onValueChange={(itemValue) =>
                   this.setState({ selectedPhone2: itemValue })
                 }
-              >
-                <Picker.Item label="" value="" />
-                <Picker.Item label="0412" value="0412" />
-                <Picker.Item label="0414" value="0414" />
-                <Picker.Item label="0416" value="0416" />
-                <Picker.Item label="0424" value="0424" />
-                <Picker.Item label="0426" value="0426" />
-              </Picker>
+                options={phoneNumberOptions}
+              />
             </View>
             <View>
               <TextInput

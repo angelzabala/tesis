@@ -1,8 +1,9 @@
 import React from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RefinedPicker from "../shared/RefinedPicker";
 
-import { Picker } from "@react-native-community/picker";
+import { phoneNumberOptions } from "../shared/variables/constants";
 import { postUserGroups } from "../actions/actions";
 import {
   StyleSheet,
@@ -29,50 +30,6 @@ export default class addUserComponent extends React.Component {
     };
   }
 
-  funcionarioComponent = (funcionario = this.state.funcionario) => {
-    if (funcionario) {
-      return (
-        <View style={styles.fatherAnswareContainer}>
-          <Text>FUNCIONARIO: </Text>
-          <View style={styles.answareContainer}>
-            <Text>SÍ</Text>
-            <TouchableWithoutFeedback
-              onPress={() => this.setState({ funcionario: true })}
-            >
-              <View style={styles.blueButton}></View>
-            </TouchableWithoutFeedback>
-            <Text>NO</Text>
-            <TouchableWithoutFeedback
-              onPress={() => this.setState({ funcionario: false })}
-            >
-              <View style={styles.blackButton}></View>
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.fatherAnswareContainer}>
-          <Text>FUNCIONARIO: </Text>
-          <View style={styles.answareContainer}>
-            <Text>SÍ</Text>
-            <TouchableWithoutFeedback
-              onPress={() => this.setState({ funcionario: true })}
-            >
-              <View style={styles.blackButton}></View>
-            </TouchableWithoutFeedback>
-            <Text>NO</Text>
-            <TouchableWithoutFeedback
-              onPress={() => this.setState({ funcionario: false })}
-            >
-              <View style={styles.blueButton}></View>
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
-      );
-    }
-  };
-
   addUserHandler = () => {
     const user = {
       phoneNumber: this.state.selectedPhoneCode + this.state.phoneNumber,
@@ -95,20 +52,13 @@ export default class addUserComponent extends React.Component {
           <Text style={styles.inputLabel}>NÚMERO DE TELÉFONO(requerido)</Text>
           <View style={styles.phoneContainer}>
             <View style={styles.pickerContainer}>
-              <Picker
+              <RefinedPicker
                 selectedValue={this.state.selectedPhoneCode}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
+                onValueChange={(itemValue) =>
                   this.setState({ selectedPhoneCode: itemValue })
                 }
-              >
-                <Picker.Item label="" value="" />
-                <Picker.Item label="0412" value="0412" />
-                <Picker.Item label="0414" value="0414" />
-                <Picker.Item label="0416" value="0416" />
-                <Picker.Item label="0424" value="0424" />
-                <Picker.Item label="0426" value="0426" />
-              </Picker>
+                options={phoneNumberOptions}
+              />
             </View>
             <View>
               <TextInput
@@ -119,7 +69,35 @@ export default class addUserComponent extends React.Component {
               />
             </View>
           </View>
-          {this.funcionarioComponent()}
+          <View style={styles.fatherAnswareContainer}>
+            <Text>FUNCIONARIO: </Text>
+            <View style={styles.answareContainer}>
+              <Text>SÍ</Text>
+              <TouchableWithoutFeedback
+                onPress={() => this.setState({ funcionario: true })}
+              >
+                <View
+                  style={
+                    this.state.funcionario
+                      ? styles.blueButton
+                      : styles.blackButton
+                  }
+                ></View>
+              </TouchableWithoutFeedback>
+              <Text>NO</Text>
+              <TouchableWithoutFeedback
+                onPress={() => this.setState({ funcionario: false })}
+              >
+                <View
+                  style={
+                    this.state.funcionario
+                      ? styles.blackButton
+                      : styles.blueButton
+                  }
+                ></View>
+              </TouchableWithoutFeedback>
+            </View>
+          </View>
           <View style={styles.buttonContainer}>
             <TouchableWithoutFeedback
               style={styles.buttonContainer}

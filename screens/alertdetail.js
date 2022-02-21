@@ -1,6 +1,6 @@
 import React from "react";
 
-import MapView, { Marker } from "react-native-maps";
+import MapToLocation from "../shared/MapToLocation";
 
 import { getAlert } from "../actions/actions";
 import { format, subHours } from "date-fns";
@@ -87,40 +87,6 @@ export default class alertScreenComponent extends React.Component {
     }
   };
 
-  mapComponent = () => {
-    if (this.state.nivel == 3) {
-      return (
-        <TouchableWithoutFeedback
-          onLongPress={() => {
-            Linking.openURL(
-              "https://google.com/maps/?q=" +
-                this.state.alerta.latitud +
-                "," +
-                this.state.alerta.longitud
-            );
-          }}
-        >
-          <MapView
-            style={styles.mapView}
-            initialRegion={{
-              latitude: this.state.alerta.latitud,
-              longitude: this.alerta.longitud,
-              latitudeDelta: 0.00922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker
-              coordinate={{
-                latitude: this.state.alerta.latitud,
-                longitude: this.state.alerta.longitud,
-              }}
-            />
-          </MapView>
-        </TouchableWithoutFeedback>
-      );
-    }
-  };
-
   eventExitHandler = () => {
     this.state.navigation.navigate("Home");
   };
@@ -174,18 +140,15 @@ export default class alertScreenComponent extends React.Component {
               editable={false}
               value={this.state.alerta.lugar}
               autoCompleteType="email"
-              onChangeText={(value) => {}}
               style={styles.regularInputText}
             />
           </View>
-          {this.mapComponent()}
+          <MapToLocation state={this.state} />
           <View>
             <Text style={styles.inputLabel}>Descripción</Text>
             <TextInput
               editable={false}
               value={this.state.alerta.descripcion}
-              autoCompleteType="email"
-              onChangeText={(value) => {}}
               style={styles.fakeTextArea}
               multiline={true}
               numberOfLines={4}

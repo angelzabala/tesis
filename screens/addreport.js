@@ -1,8 +1,8 @@
 import React from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RefinedPicker from "../shared/RefinedPicker";
 
-import { Picker } from "@react-native-community/picker";
 import { postReports } from "../actions/actions";
 import {
   StyleSheet,
@@ -13,6 +13,13 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
+
+import {
+  genderOptions,
+  meridiemOptions,
+  monthsOptions,
+  yearOptions,
+} from "../shared/variables/constants";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
@@ -98,93 +105,62 @@ export default class addReportComponent extends React.Component {
         <View style={[styles.pb80, styles.regularText]}>
           <Text style={styles.reportCategoryTitle}>Momento</Text>
           <View style={styles.datePickerContainer}>
-            <Picker
+          <RefinedPicker
               selectedValue={this.state.selectedDay}
               style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedDay: itemValue });
               }}
-            >
-              <Picker.Item label="Día" value="" />
-              {Array.from(Array(31).keys()).map((value) => (
-                <Picker.Item label={value + 1} value={value + 1} />
-              ))}
-            </Picker>
-            <Picker
+              defaultOption={{label:"Día", value: ""}}
+              numberOfItems={31}
+              numericOptions
+            />
+            
+            <RefinedPicker
               selectedValue={this.state.selectedMonth}
-              style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedMonth: itemValue });
               }}
-            >
-              <Picker.Item label="Mes" value="" />
-              <Picker.Item label="Enero" value="1" />
-              <Picker.Item label="Febrero" value="2" />
-              <Picker.Item label="Marzo" value="3" />
-              <Picker.Item label="Abril" value="4" />
-              <Picker.Item label="Mayo" value="5" />
-              <Picker.Item label="Junio" value="6" />
-              <Picker.Item label="Julio" value="7" />
-              <Picker.Item label="Agosto" value="8" />
-              <Picker.Item label="Septiembre" value="9" />
-              <Picker.Item label="Octubre" value="10" />
-              <Picker.Item label="Noviembre" value="11" />
-              <Picker.Item label="Diciembre" value="12" />
-            </Picker>
-            <Picker
+              options={monthsOptions}
+            />
+
+            <RefinedPicker
               selectedValue={this.state.selectedYear}
-              style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedYear: itemValue });
               }}
-            >
-              <Picker.Item label="Año" value="" />
-              <Picker.Item label="2015" value="2015" />
-              <Picker.Item label="2016" value="2016" />
-              <Picker.Item label="2017" value="2017" />
-              <Picker.Item label="2018" value="2018" />
-              <Picker.Item label="2019" value="2019" />
-              <Picker.Item label="2020" value="2020" />
-              <Picker.Item label="2021" value="2021" />
-              <Picker.Item label="2022" value="2022" />
-            </Picker>
+              options={yearOptions}
+            />
           </View>
           <View style={styles.datePickerContainer}>
-            <Picker
+            <RefinedPicker
               selectedValue={this.state.selectedHour}
               style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedHour: itemValue });
               }}
-            >
-              <Picker.Item label="Hora" value="" />
-              {Array.from(Array(12).keys()).map((value) => (
-                <Picker.Item label={value + 1} value={value + 1} />
-              ))}
-            </Picker>
-            <Picker
+              defaultOption={{label:"Hora", value: ""}}
+              numberOfItems={12}
+              numericOptions
+            />
+
+            <RefinedPicker
               selectedValue={this.state.selectedMinute}
-              style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedMinute: itemValue });
               }}
-            >
-              <Picker.Item label="Minuto" value="" />
-              {Array.from(Array(60).keys()).map((value) => (
-                <Picker.Item label={value + 1} value={value + 1} />
-              ))}
-            </Picker>
-            <Picker
+              defaultOption={{label:"Minuto", value: ""}}
+              numberOfItems={60}
+              numericOptions
+            />
+
+            <RefinedPicker
               selectedValue={this.state.selectedMeridiem}
-              style={styles.picker}
               onValueChange={(itemValue) => {
                 this.setState({ selectedMeridiem: itemValue });
               }}
-            >
-              <Picker.Item label="Meridiem" value="" />
-              <Picker.Item label="AM" value="AM" />
-              <Picker.Item label="PM" value="PM" />
-            </Picker>
+              options={meridiemOptions}
+            />
           </View>
           <Text style={styles.reportCategoryTitle}>Lugar</Text>
           <View style={styles.textAreaContainer}>
@@ -249,17 +225,13 @@ export default class addReportComponent extends React.Component {
           </View>
           <Text style={styles.reportCategoryTitle}>Víctima</Text>
           <View style={styles.sexPickerContainer}>
-            <Picker
-              selectedValue={this.state.sexo_victima}
-              style={styles.picker}
-              onValueChange={(itemValue) => {
-                this.setState({ sexo_victima: itemValue });
-              }}
-            >
-              <Picker.Item label="Género de la Víctima" value="" />
-              <Picker.Item label="M" value="M" />
-              <Picker.Item label="F" value="F" />
-            </Picker>
+            <RefinedPicker 
+            selectedValue={this.state.sexo_victima}
+            onValueChange={(itemValue) => {
+              this.setState({ sexo_victima: itemValue });
+            }}
+            options={genderOptions}
+            />
           </View>
           <View style={styles.textAreaContainer}>
             <View style={styles.textAreaHelper}>
@@ -275,36 +247,28 @@ export default class addReportComponent extends React.Component {
             </View>
           </View>
 
-          <View style={styles.delincuentesPickerContainer}>
-            <Picker
-              selectedValue={this.state.edad_victima}
-              style={styles.picker}
-              onValueChange={(itemValue) => {
-                this.setState({ edad_victima: itemValue });
-              }}
-            >
-              <Picker.Item label="Edad de la víctima" value="" />
-              {Array.from(Array(100).keys()).map((value) => (
-                <Picker.Item label={value} value={value} />
-              ))}
-            </Picker>
+          <View>
+          <RefinedPicker 
+             selectedValue={this.state.edad_victima}
+             onValueChange={(itemValue) => {
+               this.setState({ edad_victima: itemValue });
+             }}
+            defaultOption={{label:"Edad de la víctima", value:""}}
+            numberOfItems={100}
+            numericOptions
+            />
           </View>
           <Text style={styles.reportCategoryTitle}>Delincuentes</Text>
-          <View style={styles.delincuentesPickerContainer}>
-            <Picker
-              selectedValue={this.state.numero_delincuentes}
-              style={styles.picker}
-              onValueChange={(itemValue) => {
-                this.setState({ numero_delincuentes: itemValue });
-              }}
-            >
-              <Picker.Item label="Número de delincuentes" value="" />
-              <Picker.Item label="1" value="1" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-            </Picker>
+          <View>
+          <RefinedPicker 
+             selectedValue={this.state.edad_victima}
+             onValueChange={(itemValue) => {
+               this.setState({ edad_victima: itemValue });
+             }}
+            defaultOption={{label="Número de delincuentes", value=""}}
+            numberOfItems={5}
+            numericOptions
+            />
           </View>
           <View style={styles.textAreaContainer}>
             <View style={styles.textAreaHelper}>
