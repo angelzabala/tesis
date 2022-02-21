@@ -1,4 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
+
+import { getGroupAlerts, getGroupReports } from "../actions/actions";
+import { ScrollView } from "react-native-gesture-handler";
+import { BarChart } from "react-native-charts";
+import { format } from "date-fns";
 import {
   StyleSheet,
   Text,
@@ -8,10 +13,7 @@ import {
   FlatList,
   TouchableWithoutFeedback,
 } from "react-native";
-import { BarChart } from "react-native-charts";
-import { ScrollView } from "react-native-gesture-handler";
-import { format } from "date-fns";
-import { getGroupAlerts, getGroupReports } from "../actions/actions";
+
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
