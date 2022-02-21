@@ -1,5 +1,7 @@
 import React from "react";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { ScrollView } from "react-native-gesture-handler";
 import { postGroups } from "../actions/actions";
 import {
@@ -8,7 +10,6 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  AsyncStorage,
   Dimensions,
 } from "react-native";
 

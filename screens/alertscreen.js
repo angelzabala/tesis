@@ -1,5 +1,6 @@
 import React from "react";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
@@ -12,8 +13,7 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
-  AsyncStorage,
+  TouchableWithoutFeedback
 } from "react-native";
 
 const screenHeight = Math.round(Dimensions.get("window").height);

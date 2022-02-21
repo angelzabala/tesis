@@ -1,4 +1,7 @@
 import React from "react";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   StyleSheet,
   Image,
@@ -6,7 +9,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   Dimensions,
-  AsyncStorage,
 } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);

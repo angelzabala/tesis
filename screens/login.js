@@ -1,5 +1,7 @@
 import React from "react";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { postUser } from "../actions/actions";
 import {
   StyleSheet,
@@ -8,7 +10,6 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  AsyncStorage,
 } from "react-native";
 
 export default class LoginComponent extends React.Component {

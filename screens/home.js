@@ -1,5 +1,6 @@
 import React from "react";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from "socket.io-client/dist/socket.io";
 import * as Permissions from "expo-permissions";
 
@@ -12,7 +13,6 @@ import {
   Text,
   FlatList,
   TouchableWithoutFeedback,
-  AsyncStorage,
   Dimensions,
   SafeAreaView,
 } from "react-native";

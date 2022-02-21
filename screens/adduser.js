@@ -1,5 +1,7 @@
 import React from "react";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Picker } from "@react-native-community/picker";
 import { postUserGroups } from "../actions/actions";
 import {
@@ -9,7 +11,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   ScrollView,
-  AsyncStorage,
   Dimensions,
 } from "react-native";
 
