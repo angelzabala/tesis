@@ -2,21 +2,21 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import React from 'react';
 
-import LoginComponent from '../screens/login';
-import RegisterComponent from '../screens/register';
-import OptionalInfoComponent from '../screens/optionalregister';
-import HomeComponent from '../screens/home';
-import createGroupComponent from '../screens/creategroup';
-import groupDetailComponent from '../screens/groupdetail';
-import addUserComponent from '../screens/adduser';
 import selectGroupForAlertComponent from '../screens/selectgroupforalert';
-import alertScreenComponent from '../screens/alertscreen';
+import OptionalInfoComponent from '../screens/optionalregister';
 import alertReceptionComponent from '../screens/alertreception';
-import alertDetailComponent from '../screens/alertdetail';
+import statisticsScreenComponent from '../screens/statistics';
 import groupReportsComponent from '../screens/groupreports';
 import reportDetailComponent from '../screens/reportdetail';
-import statisticsScreenComponent from '../screens/statistics'
+import groupDetailComponent from '../screens/groupdetail';
+import createGroupComponent from '../screens/creategroup';
+import alertScreenComponent from '../screens/alertscreen';
+import alertDetailComponent from '../screens/alertdetail';
 import addReportComponent from '../screens/addreport';
+import RegisterComponent from '../screens/register';
+import addUserComponent from '../screens/adduser';
+import LoginComponent from '../screens/login';
+import HomeComponent from '../screens/home';
 
 import Header from '../shared/header';
 
@@ -32,7 +32,6 @@ const screens = {
     Register: {
         screen: RegisterComponent,
         navigationOptions: {
-            //headerLeft: null,
             title: '',
             onGoBack: () => this.refresh()
         }
@@ -40,7 +39,6 @@ const screens = {
     OptionalRegister: {
         screen: OptionalInfoComponent,
         navigationOptions: {
-            //headerLeft: null,
             title: '',
             onGoBack: () => this.refresh()
         }

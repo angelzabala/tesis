@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigator from './routes/homeStack';
-import { AsyncStorage } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 
 
