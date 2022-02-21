@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Picker } from "@react-native-community/picker";
 import { postUserGroups } from "../actions/actions";
@@ -90,9 +90,7 @@ export default class addUserComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        style={{ display: "flex", paddingTop: 50, backgroundColor: "#fff" }}
-      >
+      <ScrollView style={styles.scrollViewStyles}>
         <View style={styles.container}>
           <Text style={styles.inputLabel}>NÚMERO DE TELÉFONO(requerido)</Text>
           <View style={styles.phoneContainer}>
@@ -129,18 +127,7 @@ export default class addUserComponent extends React.Component {
                 this.addUserHandler();
               }}
             >
-              <Text
-                style={{
-                  width: screenWidth * 0.6,
-                  color: "#fff",
-                  backgroundColor: "#012133",
-                  textAlign: "center",
-                  borderRadius: 25,
-                  padding: 10,
-                }}
-              >
-                Agregar Usuario
-              </Text>
+              <Text style={styles.addUserButton}>Agregar Usuario</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -155,6 +142,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  addUserButton: {
+    width: screenWidth * 0.6,
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+  },
+  scrollViewStyles: {
+    display: "flex",
+    paddingTop: 50,
+    backgroundColor: "#fff",
   },
   pickerContainer: {
     borderBottomColor: "#000",

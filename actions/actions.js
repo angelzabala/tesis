@@ -10,7 +10,7 @@ const headers = {
 export const postReports = (data, successFn) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/reportes", options)
@@ -28,7 +28,7 @@ export const postReports = (data, successFn) => {
 export const postUserGroups = (data, phoneNumber, successFn) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
 
@@ -37,9 +37,9 @@ export const postUserGroups = (data, phoneNumber, successFn) => {
       if (response.status == 200) {
         alert("el usuario se ha agregado correctamente");
         successFn();
-      } else if(response.status == 204){
+      } else if (response.status == 204) {
         alert("usuario no registrado");
-      }else{
+      } else {
         alert("error interno, por favor intente más tarde");
       }
     })
@@ -49,7 +49,7 @@ export const postUserGroups = (data, phoneNumber, successFn) => {
 export const getAlerts = (userPhoneNumber) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
   fetch(ipv4 + "/alertas/" + userPhoneNumber, options)
     .then((response) => {
@@ -67,7 +67,7 @@ export const getAlerts = (userPhoneNumber) => {
 export const getAlert = (alertPk) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
 
   fetch(ipv4 + "/alerta/" + alertPk, options)
@@ -76,7 +76,7 @@ export const getAlert = (alertPk) => {
         response.json().then((jsonObj) => {
           return { fulfilled: true, alerta: jsonObj[0] };
         });
-      } else{
+      } else {
         alert("error interno, por favor intente más tarde");
       }
     })
@@ -88,7 +88,7 @@ export const getAlert = (alertPk) => {
 export const putAlert = (data, alertPk, successFn) => {
   const options = {
     method: "PUT",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
 
@@ -108,7 +108,7 @@ export const putAlert = (data, alertPk, successFn) => {
 export const postAlerts = (data) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
 
@@ -128,7 +128,7 @@ export const postAlerts = (data) => {
 export const postGroups = (data, state, successFn) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
 
@@ -143,7 +143,7 @@ export const postGroups = (data, state, successFn) => {
           };
           const options = {
             method: "POST",
-            ...headers, 
+            ...headers,
             body: JSON.stringify(data2),
           };
           fetch(ipv4 + "/u-grupos/" + state.groupCreator, options).then(
@@ -170,7 +170,7 @@ export const postGroups = (data, state, successFn) => {
 export const getGroupUsers = (data) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
   fetch(
     data.phone &&
@@ -198,7 +198,7 @@ export const getGroupUsers = (data) => {
 export const getUserGroups = (userPhoneNumber) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
   fetch(ipv4 + "/u-grupos/" + userPhoneNumber, options)
     .then((response) => {
@@ -216,7 +216,7 @@ export const getUserGroups = (userPhoneNumber) => {
 export const getGroupReports = (grupo) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
   fetch(ipv4 + "/reportes/grupo/" + grupo, options)
     .then((response) => {
@@ -234,7 +234,7 @@ export const getGroupReports = (grupo) => {
 export const postUser = (data, successFn) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/usuario", options)
@@ -245,7 +245,7 @@ export const postUser = (data, successFn) => {
         });
       } else if (response.status == 204) {
         alert("usuario o contraseña incorrecta");
-      }else{
+      } else {
         alert("error interno, por favor intente más tarde");
       }
     })
@@ -255,7 +255,7 @@ export const postUser = (data, successFn) => {
 export const postUsers = (data, successFn) => {
   const options = {
     method: "POST",
-    ...headers, 
+    ...headers,
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/usuarios", options)
@@ -272,7 +272,7 @@ export const postUsers = (data, successFn) => {
 export const getGroupAlerts = (grupo) => {
   const options = {
     method: "GET",
-    ...headers, 
+    ...headers,
   };
   fetch(ipv4 + "/alertas/grupo/" + grupo, options)
     .then((response) => {
@@ -280,7 +280,7 @@ export const getGroupAlerts = (grupo) => {
         response.json().then((jsonObj) => {
           return { fulfilled: true, alertas: jsonObj };
         });
-      } else{
+      } else {
         alert("error interno, por favor intente más tarde");
       }
     })

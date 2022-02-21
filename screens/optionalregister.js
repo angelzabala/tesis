@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Picker } from "@react-native-community/picker";
 import {
@@ -55,12 +55,11 @@ export default class OptionalInfoComponent extends React.Component {
         "phone",
         this.state.navigation.state.params.userData.phone
       ).then(this.state.navigation.navigate("Home"));
-    })
-    
+    });
   };
   render() {
     return (
-      <ScrollView style={{ backgroundColor: "#04a5ff" }}>
+      <ScrollView style={styles.scrollViewBackground}>
         <View style={styles.container}>
           <Text style={styles.bigText}>Información adicional (opcional)</Text>
 
@@ -123,7 +122,7 @@ export default class OptionalInfoComponent extends React.Component {
               <Picker
                 selectedValue={this.state.selectedPhone2}
                 style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
+                onValueChange={(itemValue) =>
                   this.setState({ selectedPhone2: itemValue })
                 }
               >
@@ -174,18 +173,7 @@ export default class OptionalInfoComponent extends React.Component {
               style={styles.buttonContainer}
               onPress={this.registrationHandler}
             >
-              <Text
-                style={{
-                  width: screenWidth * 0.6,
-                  color: "#fff",
-                  backgroundColor: "#012133",
-                  textAlign: "center",
-                  borderRadius: 25,
-                  padding: 10,
-                }}
-              >
-                Registrarse
-              </Text>
+              <Text style={styles.registerButton}>Registrarse</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -200,6 +188,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#04a5ff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  registerButton: {
+    width: screenWidth * 0.6,
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+  },
+  scrollViewBackground: {
+    backgroundColor: "#04a5ff",
   },
   pickerContainer: {
     borderBottomColor: "#fff",

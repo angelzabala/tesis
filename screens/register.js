@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
- 
+
 export default class RegisterComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +45,7 @@ export default class RegisterComponent extends React.Component {
   };
   render() {
     return (
-      <ScrollView style={{ backgroundColor: "#04a5ff", paddingBottom: 30 }}>
+      <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
           <Text style={styles.bigText}>Registro</Text>
 
@@ -153,18 +153,7 @@ export default class RegisterComponent extends React.Component {
             style={styles.buttonContainer}
             onPress={this.pressForwardHandler}
           >
-            <Text
-              style={{
-                width: screenWidth * 0.6,
-                color: "#fff",
-                backgroundColor: "#012133",
-                textAlign: "center",
-                borderRadius: 25,
-                padding: 10,
-              }}
-            >
-              Avanzar
-            </Text>
+            <Text style={styles.goAheadButton}>Avanzar</Text>
           </TouchableWithoutFeedback>
         </View>
       </ScrollView>
@@ -178,6 +167,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#04a5ff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  scrollView: { backgroundColor: "#04a5ff", paddingBottom: 30 },
+  goAheadButton: {
+    width: screenWidth * 0.6,
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
   },
   pickerContainer: {
     borderBottomColor: "#fff",

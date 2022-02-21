@@ -40,7 +40,7 @@ export default class selectGroupForAlertComponent extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.container}>
           <Text style={styles.title}>Generar alerta</Text>
           <Text style={styles.redText}>
@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.9,
     marginLeft: screenWidth * 0.05,
     marginTop: 30,
+  },
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 30,

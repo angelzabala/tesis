@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions, ScrollView } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
+
 export default class reportDetailComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -12,20 +13,18 @@ export default class reportDetailComponent extends React.Component {
       navigation: this.props.navigation,
     };
   }
- 
+
   wholeComponent = () => {
     if (this.state.reporte) {
       return (
-        <ScrollView style={{ marginBottom: 30 }}>
-          <Text style={{ fontSize: 35, marginBottom: 5, fontWeight: "bold" }}>
-            Ver reporte
-          </Text>
+        <ScrollView style={styles.mb30}>
+          <Text style={styles.seeReport}>Ver reporte</Text>
           <View styles={styles.creatorContainer}>
             <Text style={styles.reportCreatorLabel}>
               Agregado por el usuario: {this.state.reporte.usuario}
             </Text>
           </View>
-          <View style={{ paddingBottom: 80 }} style={styles.regularText}>
+          <View style={styles.pb80} style={styles.regularText}>
             <Text style={styles.reportCategoryTitle}>Momento</Text>
             <Text style={styles.regularText}>
               Evento ocurrido en la fecha: {this.state.reporte.fecha}
@@ -99,6 +98,17 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
     justifyContent: "flex-start",
     paddingTop: 30,
+  },
+  mb30: {
+    marginBottom: 30,
+  },
+  pb80: {
+    paddingBottom: 80,
+  },
+  seeReport: {
+    fontSize: 35,
+    marginBottom: 5,
+    fontWeight: "bold",
   },
   reportCreatorLabel: {
     fontWeight: "bold",

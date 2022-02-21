@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Permissions from "expo-permissions";
 
 import { getGroupUsers } from "../actions/actions";
@@ -15,9 +15,6 @@ import {
   SafeAreaView,
 } from "react-native";
 
-
-
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -50,10 +47,9 @@ export default class groupDetailComponent extends React.Component {
       isAdmin: state.params.isAdmin,
     };
     const userGroupResponse = getGroupUsers(data);
-    if(userGroupResponse.fulfilled){
+    if (userGroupResponse.fulfilled) {
       this.setState({ users: userGroupResponse.users });
     }
-    
   };
   adminLabel = (isadmin) => {
     if (isadmin) {
@@ -91,9 +87,7 @@ export default class groupDetailComponent extends React.Component {
   };
 
   checkPermissions = async () => {
-    const { status } = await Permissions.getAsync(
-      Permissions.LOCATION
-    );
+    const { status } = await Permissions.getAsync(Permissions.LOCATION);
     if (status !== "granted") {
       let response = await Permissions.askAsync(Permissions.LOCATION);
       response = response;
@@ -215,7 +209,7 @@ export default class groupDetailComponent extends React.Component {
                         this.userPressHandler(item);
                       }}
                     >
-                      <View style={{ marginBottom: 20 }}>
+                      <View style={styles.mb20}>
                         <View style={styles.nameContainer}>
                           <Text style={styles.userName}>
                             {item.nombre} - {item.fk_usuario}
@@ -233,7 +227,7 @@ export default class groupDetailComponent extends React.Component {
                         this.userPressHandler(item);
                       }}
                     >
-                      <View style={{ marginBottom: 20 }}>
+                      <View style={styles.mb20}>
                         <View style={styles.nameContainer}>
                           <Text style={styles.userName}>
                             {item.nombre} - {item.fk_usuario}
@@ -290,6 +284,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 50,
+  },
+  mb20: {
+    marginBottom: 20,
   },
   groupName: {
     fontSize: 30,

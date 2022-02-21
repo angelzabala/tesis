@@ -1,6 +1,5 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
@@ -13,7 +12,7 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -143,9 +142,7 @@ export default class alertScreenComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-      >
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <Modal isVisible={this.state.modalShow} style={styles.modal}>
           <Text style={styles.modalTitle}>¿HA SIDO UNA FALSA ALARMA?</Text>
           <View style={styles.modalConfirmationBox}>
@@ -254,17 +251,7 @@ export default class alertScreenComponent extends React.Component {
                 this.eventExitHandler();
               }}
             >
-              <Text
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#012133",
-                  textAlign: "center",
-                  borderRadius: 25,
-                  padding: 10,
-                }}
-              >
-                Finalizar evento
-              </Text>
+              <Text style={styles.finishEventButton}>Finalizar evento</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -281,6 +268,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     width: screenWidth,
+  },
+  finishEventButton: {
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+  },
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: "center",
   },
   inputLabel: {
     color: "#000",

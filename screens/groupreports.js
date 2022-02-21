@@ -45,14 +45,7 @@ export default class groupReportsComponent extends React.Component {
               <TouchableWithoutFeedback
                 onPress={() => this.reportPressHAndler(item)}
               >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    paddingBottom: 2,
-                    textDecorationLine: "underline",
-                    marginBottom: 20,
-                  }}
-                >
+                <Text style={styles.reportCard}>
                   {item.fecha} - {item.hora}:{item.minuto}
                   {item.meridiem}
                 </Text>
@@ -63,15 +56,8 @@ export default class groupReportsComponent extends React.Component {
       );
     } else {
       return (
-        <View style={{ display: "flex", width: screenWidth }}>
-          <Text
-            style={{
-              fontSize: 25,
-              color: "#D82C2C",
-              display: "flex",
-              textAlign: "center",
-            }}
-          >
+        <View style={styles.view}>
+          <Text style={style.noReportsTitle}>
             El grupo no tiene reportes cargados por el momento
           </Text>
         </View>
@@ -100,9 +86,7 @@ export default class groupReportsComponent extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={{ fontSize: 35, marginBottom: 50, fontWeight: "bold" }}>
-          Reportes del grupo
-        </Text>
+        <Text style={style.groupReportsTitle}>Reportes del grupo</Text>
         <View>{this.reportListComponent()}</View>
       </SafeAreaView>
     );
@@ -116,5 +100,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 30,
+  },
+  reportCard: {
+    fontSize: 20,
+    paddingBottom: 2,
+    textDecorationLine: "underline",
+    marginBottom: 20,
+  },
+  view: { display: "flex", width: screenWidth },
+  noReportsTitle: {
+    fontSize: 25,
+    color: "#D82C2C",
+    display: "flex",
+    textAlign: "center",
+  },
+  groupReportsTitle: {
+    fontSize: 35,
+    marginBottom: 50,
+    fontWeight: "bold",
   },
 });

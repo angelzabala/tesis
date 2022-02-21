@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { postUser } from "../actions/actions";
 import {
@@ -88,17 +88,7 @@ export default class LoginComponent extends React.Component {
         />
         <View style={styles.buttonContainer}>
           <TouchableWithoutFeedback onPress={this.pressLoginHandler}>
-            <Text
-              style={{
-                color: "#fff",
-                backgroundColor: "#012133",
-                textAlign: "center",
-                borderRadius: 25,
-                padding: 10,
-              }}
-            >
-              Ingresar
-            </Text>
+            <Text style={styles.logInButton}>Ingresar</Text>
           </TouchableWithoutFeedback>
         </View>
         <TouchableWithoutFeedback
@@ -106,7 +96,9 @@ export default class LoginComponent extends React.Component {
             this.state.navigation.navigate("Register");
           }}
         >
-          <Text style={{ color: "#fff" }}>¿No tienes cuenta? registrate</Text>
+          <Text style={styles.notRegistered}>
+            ¿No tienes cuenta? registrate
+          </Text>
         </TouchableWithoutFeedback>
       </View>
     );
@@ -119,6 +111,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#04a5ff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  notRegistered: { color: "#fff" },
+  logInButton: {
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
   },
   buttonContainer: {
     width: 210,

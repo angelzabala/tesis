@@ -79,7 +79,7 @@ export default class createGroupComponent extends React.Component {
   render() {
     return (
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        contentContainerStyle={styles.scrollView}
       >
         <View style={styles.container}>
           <View>
@@ -123,13 +123,7 @@ export default class createGroupComponent extends React.Component {
               }}
             >
               <Text
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#012133",
-                  textAlign: "center",
-                  borderRadius: 25,
-                  padding: 10,
-                }}
+                style={}
               >
                 Crear grupo
               </Text>
@@ -149,6 +143,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     width: screenWidth,
+  },
+  createGroupButton: {
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+  },
+  scrollView: {
+    flexGrow: 1, justifyContent: "center" 
   },
   inputLabel: {
     color: "#000",

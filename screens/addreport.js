@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Picker } from "@react-native-community/picker";
 import { postReports } from "../actions/actions";
@@ -93,11 +93,9 @@ export default class addReportComponent extends React.Component {
 
   wholeComponent = () => {
     return (
-      <ScrollView style={{ marginBottom: 30 }}>
-        <Text style={{ fontSize: 35, marginBottom: 5, fontWeight: "bold" }}>
-          Cargar reporte
-        </Text>
-        <View style={{ paddingBottom: 80 }} style={styles.regularText}>
+      <ScrollView style={styles.mb30}>
+        <Text style={styles.loadReportTitle}>Cargar reporte</Text>
+        <View style={[styles.pb80, styles.regularText]}>
           <Text style={styles.reportCategoryTitle}>Momento</Text>
           <View style={styles.datePickerContainer}>
             <Picker
@@ -358,20 +356,7 @@ export default class addReportComponent extends React.Component {
             this.addReportHandler();
           }}
         >
-          <Text
-            style={{
-              width: screenWidth * 0.6,
-              color: "#fff",
-              marginTop: 30,
-              backgroundColor: "#012133",
-              textAlign: "center",
-              borderRadius: 25,
-              padding: 10,
-              alignSelf: "center",
-            }}
-          >
-            Avanzar
-          </Text>
+          <Text style={styles.advanceButton}>Avanzar</Text>
         </TouchableWithoutFeedback>
       </ScrollView>
     );
@@ -437,5 +422,26 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderColor: "#000",
     textAlignVertical: "top",
+  },
+  mb30: {
+    marginBottom: 30,
+  },
+  pb80: {
+    paddingBottom: 80,
+  },
+  loadReportTitle: {
+    fontSize: 35,
+    marginBottom: 5,
+    fontWeight: "bold",
+  },
+  advanceButton: {
+    width: screenWidth * 0.6,
+    color: "#fff",
+    marginTop: 30,
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+    alignSelf: "center",
   },
 });

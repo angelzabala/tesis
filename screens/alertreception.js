@@ -63,17 +63,8 @@ export default class alertScreenComponent extends React.Component {
     } else {
       if (this.state.nivel == 1) {
         return (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text
-              style={{
-                alignSelf: "center",
-                marginRight: screenWidth * 0.15,
-                fontWeight: "bold",
-                fontSize: 30,
-              }}
-            >
-              {formattedHour}
-            </Text>
+          <View style={styles.alertTimeContainer}>
+            <Text style={styles.alertTimeText}>{formattedHour}</Text>
             <View style={styles.greenAlert}>
               <Image
                 style={styles.alertImg}
@@ -84,17 +75,8 @@ export default class alertScreenComponent extends React.Component {
         );
       } else if (this.state.nivel == 2) {
         return (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text
-              style={{
-                alignSelf: "center",
-                marginRight: screenWidth * 0.15,
-                fontWeight: "bold",
-                fontSize: 30,
-              }}
-            >
-              {formattedHour}
-            </Text>
+          <View style={styles.alertTimeContainer}>
+            <Text style={styles.alertTimeText}>{formattedHour}</Text>
             <View style={styles.yellowAlert}>
               <Image
                 style={styles.alertImg}
@@ -105,17 +87,8 @@ export default class alertScreenComponent extends React.Component {
         );
       } else if (this.state.nivel == 3) {
         return (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text
-              style={{
-                alignSelf: "center",
-                marginRight: screenWidth * 0.15,
-                fontWeight: "bold",
-                fontSize: 30,
-              }}
-            >
-              {formattedHour}
-            </Text>
+          <View style={styles.alertTimeContainer}>
+            <Text style={styles.alertTimeText}>{formattedHour}</Text>
             <View style={styles.redAlert}>
               <Image
                 style={styles.alertImg}
@@ -142,13 +115,7 @@ export default class alertScreenComponent extends React.Component {
           }}
         >
           <MapView
-            style={{
-              flex: 1,
-              width: screenWidth * 0.8,
-              height: screenWidth * 0.6,
-              marginBottom: 20,
-              marginTop: 20,
-            }}
+            style={styles.mapView}
             initialRegion={{
               latitude: this.state.navigation.state.params.latitud,
               longitude: this.state.navigation.state.params.longitud,
@@ -187,7 +154,7 @@ export default class alertScreenComponent extends React.Component {
         lugar: this.state.lugar,
         description: this.state.descripcion,
       };
-      
+
       putAlert(data, this.state.pk_alerta, () => {
         socket.disconnect();
         alert("Actualización manual de la base de datos realizada");
@@ -206,9 +173,7 @@ export default class alertScreenComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-      >
+      <ScrollView style={style.contentContainerStyle}>
         <View style={styles.container}>
           <Modal isVisible={this.state.estado == "false"} style={styles.modal}>
             <Text style={styles.modalTitle}>
@@ -220,30 +185,11 @@ export default class alertScreenComponent extends React.Component {
                   this.eventExitHandler();
                 }}
               >
-                <Text
-                  style={{
-                    color: "#fff",
-                    backgroundColor: "#012133",
-                    textAlign: "center",
-                    borderRadius: 25,
-                    padding: 10,
-                  }}
-                >
-                  Salir de la alerta
-                </Text>
+                <Text style={styles.exitAlert}>Salir de la alerta</Text>
               </TouchableWithoutFeedback>
             </View>
           </Modal>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 30,
-              alignSelf: "flex-start",
-              marginTop: 30,
-              marginLeft: screenWidth * 0.1,
-              marginBottom: 20,
-            }}
-          >
+          <Text style={styles.groupNameTitle}>
             Del grupo: {this.state.navigation.state.params.nombreGrupo}
           </Text>
           {this.circleLevelComponent()}
@@ -276,17 +222,7 @@ export default class alertScreenComponent extends React.Component {
                 this.eventExitHandler();
               }}
             >
-              <Text
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#012133",
-                  textAlign: "center",
-                  borderRadius: 25,
-                  padding: 10,
-                }}
-              >
-                Salir de la alerta
-              </Text>
+              <Text style={styles.exitAlert}>Salir de la alerta</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -304,10 +240,46 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: screenWidth,
   },
+  contentContainerStyle: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  mapView: {
+    flex: 1,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.6,
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  exitAlert: {
+    color: "#fff",
+    backgroundColor: "#012133",
+    textAlign: "center",
+    borderRadius: 25,
+    padding: 10,
+  },
+  groupNameTitle: {
+    fontWeight: "bold",
+    fontSize: 30,
+    alignSelf: "flex-start",
+    marginTop: 30,
+    marginLeft: screenWidth * 0.1,
+    marginBottom: 20,
+  },
   inputLabel: {
     color: "#000",
     fontSize: 15,
     fontWeight: "bold",
+  },
+  alertTimeText: {
+    alignSelf: "center",
+    marginRight: screenWidth * 0.15,
+    fontWeight: "bold",
+    fontSize: 30,
+  },
+  alertTimeContainer: {
+    display: "flex",
+    flexDirection: "row",
   },
   regularInputText: {
     borderBottomColor: "#000",

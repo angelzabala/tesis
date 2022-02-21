@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     fontWeight: "100",
   },
   noAlertsText: {
-    fontSize: 20,
+    fontSize: 20, 
     textAlign: "left",
     fontWeight: "100",
     marginBottom: 30,

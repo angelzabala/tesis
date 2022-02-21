@@ -13,7 +13,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { format } from "date-fns";
 import { getGroupAlerts, getGroupReports } from "../actions/actions";
 
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class statisticsScreenComponent extends React.Component {
@@ -32,8 +31,10 @@ export default class statisticsScreenComponent extends React.Component {
   }
 
   getAlertList = () => {
-    const groupAlertsResponse = getGroupAlerts(this.state.navigation.state.params.fk_grupo);
-    if(groupAlertsResponse.fulfilled){
+    const groupAlertsResponse = getGroupAlerts(
+      this.state.navigation.state.params.fk_grupo
+    );
+    if (groupAlertsResponse.fulfilled) {
       this.setState({ alertas: groupAlertsResponse }, () => {
         this.getReportList();
       });
@@ -77,14 +78,7 @@ export default class statisticsScreenComponent extends React.Component {
                 <TouchableWithoutFeedback
                   onPress={() => this.reportPressHandler(item)}
                 >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingBottom: 2,
-                      textDecorationLine: "underline",
-                      marginBottom: 20,
-                    }}
-                  >
+                  <Text style={styles.reportCard}>
                     {item.fecha} - {item.hora}:{item.minuto}
                     {item.meridiem}
                   </Text>
@@ -96,8 +90,8 @@ export default class statisticsScreenComponent extends React.Component {
       );
     } else {
       return (
-        <View style={{ display: "flex", width: screenWidth }}>
-          <Text style={{ fontSize: 25, color: "#D82C2C", display: "flex" }}>
+        <View style={styles.noReportsContainer}>
+          <Text style={styles.noReportsTitle}>
             El grupo no tiene reportes cargados por el momento
           </Text>
         </View>
@@ -114,21 +108,14 @@ export default class statisticsScreenComponent extends React.Component {
             keyExtractor={(item) => item.pk_alerta.toString()}
             renderItem={({ item }) => {
               let moment = new Date(item.hora);
-              //var formatMoment = format(date, "MMMM Do, YYYY H:mma");
-              var formattedDate = format(moment, "dd/MMM/yyyy");
-              var formattedHour = format(moment, "H:mma");
+              let formattedDate = format(moment, "dd/MMM/yyyy");
+              let formattedHour = format(moment, "H:mma");
+
               return (
                 <TouchableWithoutFeedback
                   onPress={() => this.alertPressHandler(item)}
                 >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingBottom: 2,
-                      textDecorationLine: "underline",
-                      marginBottom: 20,
-                    }}
-                  >
+                  <Text style={styles.dateAndHour}>
                     {formattedDate} - {formattedHour}
                   </Text>
                 </TouchableWithoutFeedback>
@@ -139,8 +126,8 @@ export default class statisticsScreenComponent extends React.Component {
       );
     } else {
       return (
-        <View style={{ display: "flex", width: screenWidth }}>
-          <Text style={{ fontSize: 25, color: "#D82C2C", display: "flex" }}>
+        <View style={styles.noReportsContainer}>
+          <Text style={styles.noReportsTitle}>
             El grupo no tiene reportes cargados por el momento
           </Text>
         </View>
@@ -188,11 +175,9 @@ export default class statisticsScreenComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView style={{ display: "flex", flex: 1 }}>
+      <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
-          <Text style={{ fontSize: 40, fontWeight: "bold", marginBottom: 15 }}>
-            Estadísticas
-          </Text>
+          <Text style={styles.statisticTitle}>Estadísticas</Text>
           <BarChart
             dataSets={[
               {
@@ -208,20 +193,12 @@ export default class statisticsScreenComponent extends React.Component {
             horizontal={false}
             showGrid={true}
             barSpacing={30}
-            style={{
-              height: 300,
-              margin: 0,
-              width: screenWidth * 0.9,
-            }}
+            style={styles.barChart}
           />
           {this.labelComponent()}
-          <Text style={{ fontSize: 30, marginBottom: 20, fontWeight: "bold" }}>
-            Reportes del grupo
-          </Text>
+          <Text style={styles.sectionTitle}>Reportes del grupo</Text>
           <View>{this.reportListComponent()}</View>
-          <Text style={{ fontSize: 30, marginBottom: 20, fontWeight: "bold" }}>
-            Alertas del grupo
-          </Text>
+          <Text style={styles.sectionTitle}>Alertas del grupo</Text>
           <View>{this.alertListComponent()}</View>
         </View>
       </ScrollView>
@@ -236,5 +213,45 @@ const styles = StyleSheet.create({
     alignContent: "center",
     width: screenWidth * 0.9,
     marginLeft: screenWidth * 0.05,
+  },
+  reportCard: {
+    fontSize: 20,
+    paddingBottom: 2,
+    textDecorationLine: "underline",
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 30,
+    marginBottom: 20,
+    fontWeight: "bold",
+  },
+  statisticTitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  scrollView: {
+    display: "flex",
+    flex: 1,
+  },
+  noReportsContainer: {
+    display: "flex",
+    width: screenWidth,
+  },
+  noReportsTitle: {
+    fontSize: 25,
+    color: "#D82C2C",
+    display: "flex",
+  },
+  dateAndHour: {
+    fontSize: 20,
+    paddingBottom: 2,
+    textDecorationLine: "underline",
+    marginBottom: 20,
+  },
+  barChart: {
+    height: 300,
+    margin: 0,
+    width: screenWidth * 0.9,
   },
 });
