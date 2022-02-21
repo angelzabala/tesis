@@ -19,7 +19,7 @@ import {
 const screenHeight = Math.round(Dimensions.get("window").height);
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class alertScreenComponent extends React.Component {
+export default class AlertScreenComponent extends React.Component {
   constructor(props) {
     super(props);
 

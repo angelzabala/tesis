@@ -15,7 +15,7 @@ import {
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class createGroupComponent extends React.Component {
+export default class CreateGroupComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

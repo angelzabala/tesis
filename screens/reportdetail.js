@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Dimensions, ScrollView } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class reportDetailComponent extends React.Component {
+export default class ReportDetailComponent extends React.Component {
   constructor(props) {
     super(props);
 

@@ -13,7 +13,7 @@ import {
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class selectGroupForAlertComponent extends React.Component {
+export default class SelectGroupForAlertComponent extends React.Component {
   constructor(props) {
     super(props);
 

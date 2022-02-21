@@ -23,7 +23,7 @@ import {
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class addReportComponent extends React.Component {
+export default class AddReportComponent extends React.Component {
   constructor(props) {
     super(props);
 

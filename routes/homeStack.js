@@ -2,21 +2,21 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import React from "react";
 
-import selectGroupForAlertComponent from "../screens/selectGroupForAlert";
-import OptionalInfoComponent from "../screens/optionalRegister";
-import alertReceptionComponent from "../screens/alertReception";
-import statisticsScreenComponent from "../screens/statistics";
-import groupReportsComponent from "../screens/groupReports";
-import reportDetailComponent from "../screens/reportDetail";
-import groupDetailComponent from "../screens/groupDetail";
-import createGroupComponent from "../screens/createGroup";
-import alertScreenComponent from "../screens/alertScreen";
-import alertDetailComponent from "../screens/alertDetail";
-import addReportComponent from "../screens/addReport";
-import RegisterComponent from "../screens/register";
-import addUserComponent from "../screens/addUser";
-import LoginComponent from "../screens/login";
-import HomeComponent from "../screens/home";
+import SelectGroupForAlertComponent from "../screens/SelectGroupForAlert";
+import OptionalInfoComponent from "../screens/OptionalRegister";
+import AlertReceptionComponent from "../screens/AlertReception";
+import StatisticsScreenComponent from "../screens/Statistics";
+import GroupReportsComponent from "../screens/GroupReports";
+import ReportDetailComponent from "../screens/ReportDetail";
+import GroupDetailComponent from "../screens/GroupDetail";
+import CreateGroupComponent from "../screens/CreateGroup";
+import AlertScreenComponent from "../screens/AlertScreen";
+import AlertDetailComponent from "../screens/AlertDetail";
+import AddReportComponent from "../screens/AddReport";
+import RegisterComponent from "../screens/Register";
+import AddUserComponent from "../screens/AddUser";
+import LoginComponent from "../screens/Login";
+import HomeComponent from "../screens/Home";
 
 import Header from "../shared/header";
 
@@ -55,14 +55,14 @@ const screens = {
     },
   },
   createGroup: {
-    screen: createGroupComponent,
+    screen: CreateGroupComponent,
     navigationOptions: {
       headerTitle: "",
       onGoBack: () => this.refresh(),
     },
   },
   groupDetail: {
-    screen: groupDetailComponent,
+    screen: GroupDetailComponent,
     navigationOptions: ({ navigation }) => {
       return {
         headerTitle: (props) => (
@@ -77,7 +77,7 @@ const screens = {
     },
   },
   addUser: {
-    screen: addUserComponent,
+    screen: AddUserComponent,
     navigationOptions: () => {
       return {
         headerTitle: () => {},
@@ -86,7 +86,7 @@ const screens = {
     },
   },
   selectGroupForAlert: {
-    screen: selectGroupForAlertComponent,
+    screen: SelectGroupForAlertComponent,
     navigationOptions: () => {
       return {
         headerTitle: "",
@@ -95,7 +95,7 @@ const screens = {
     },
   },
   AlertScreen: {
-    screen: alertScreenComponent,
+    screen: AlertScreenComponent,
     navigationOptions: {
       headerTitle: "",
       headerLeft: () => {},
@@ -103,38 +103,38 @@ const screens = {
     },
   },
   alertReceptionScreen: {
-    screen: alertReceptionComponent,
+    screen: AlertReceptionComponent,
     navigationOptions: {
       headerTitle: "",
       headerLeft: () => {},
     },
   },
   alertDetail: {
-    screen: alertDetailComponent,
+    screen: AlertDetailComponent,
     navigationOptions: {
       headerTitle: "",
     },
   },
   groupReports: {
-    screen: groupReportsComponent,
+    screen: GroupReportsComponent,
     navigationOptions: {
       headerTitle: "",
     },
   },
   reportDetailScreen: {
-    screen: reportDetailComponent,
+    screen: ReportDetailComponent,
     navigationOptions: {
       headerTitle: "",
     },
   },
   statisticsScreen: {
-    screen: statisticsScreenComponent,
+    screen: StatisticsScreenComponent,
     navigationOptions: {
       headerTitle: "",
     },
   },
   addReportScreen: {
-    screen: addReportComponent,
+    screen: AddReportComponent,
     navigationOptions: {
       headerTitle: "",
     },

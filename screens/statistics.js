@@ -17,7 +17,7 @@ import {
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
-export default class statisticsScreenComponent extends React.Component {
+export default class StatisticsScreenComponent extends React.Component {
   constructor(props) {
     super(props);
 

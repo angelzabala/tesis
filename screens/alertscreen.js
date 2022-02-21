@@ -20,7 +20,7 @@ const screenWidth = Math.round(Dimensions.get("window").width);
 const ipv4 = require("../serverip.json").serverIp;
 const socket = io(ipv4, { jsonp: false });
 
-export default class alertScreenComponent extends React.Component {
+export default class AlertScreenComponent extends React.Component {
   constructor(props) {
     super(props);
 

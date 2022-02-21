@@ -24,7 +24,7 @@ const socket = io(ipv4, { jsonp: false });
 
 var updateCalled = false;
 
-export default class alertScreenComponent extends React.Component {
+export default class AlertScreenComponent extends React.Component {
   constructor(props) {
     super(props);
 
