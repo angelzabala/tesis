@@ -1,5 +1,6 @@
 import React from "react";
 
+import { getGroupReports } from "../actions/actions";
 import {
   StyleSheet,
   View,
@@ -10,7 +11,6 @@ import {
   SafeAreaView,
 } from "react-native";
 
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class groupReportsComponent extends React.Component {
@@ -24,24 +24,10 @@ export default class groupReportsComponent extends React.Component {
     };
   }
   getReportsData = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(ipv4 + "/reportes/grupo/" + this.state.grupo, options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ reportes: jsonObj });
-          });
-        } else if (response.status == 204) {
-          alert("error interno, intente mas tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+    const getReportsResponse = getGroupReports(this.state.grupo);
+    if (getReportsResponse.fulfilled) {
+      this.setState({ reportes: getReportsResponse.reportes });
+    }
   };
 
   reportPressHAndler = (reporte) => {

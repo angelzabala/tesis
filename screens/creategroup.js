@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { ScrollView } from "react-native-gesture-handler";
+import { postGroup } from "../actions/actions";
 import {
   StyleSheet,
   TextInput,
@@ -11,8 +12,6 @@ import {
   Dimensions,
 } from "react-native";
 
-
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class createGroupComponent extends React.Component {
@@ -46,55 +45,16 @@ export default class createGroupComponent extends React.Component {
       groupEnviroment: this.state.groupEnviroment,
       groupCreator: this.state.groupCreator,
     };
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch(ipv4 + "/grupos", options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            const data2 = {
-              groupNumber: jsonObj[0].pk_grupo,
-              groupName: this.state.groupName,
-              isAdmin: this.state.isAdmin,
-            };
-            const options = {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data2),
-            };
-            fetch(ipv4 + "/u-grupos/" + this.state.groupCreator, options).then(
-              (response) => {
-                if (response.status == 200) {
-                  alert(
-                    "El grupo " +
-                      this.state.groupName +
-                      " se ha creado de manera exitosa"
-                  );
-                  this.state.navigation.navigate("Home");
-                } else {
-                  alert(
-                    "error interno, el grupo no pudo ser creado, por favor intente más tarde"
-                  );
-                }
-              }
-            );
-          });
-        } else {
-          alert(
-            "error interno, el grupo no pudo ser creado, por favor intente más tarde"
-          );
-        }
-      })
-      .catch((err) => console.log(err));
+
+    postGroup(data,this.state, () => {
+      alert(
+        "El grupo " +
+          this.state.groupName +
+          " se ha creado de manera exitosa"
+      );
+      this.state.navigation.navigate("Home");
+    });
+   
   };
 
   componentDidMount() {

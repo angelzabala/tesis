@@ -4,6 +4,7 @@ import MapView, { Marker } from "react-native-maps";
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
+import { putAlert } from "../actions/actions";
 import { format, subHours } from "date-fns";
 import {
   Dimensions,
@@ -17,12 +18,11 @@ import {
   Linking,
 } from "react-native";
 
-
-
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
+const ipv4 = require("../serverip.json").serverIp;
 const socket = io(ipv4, { jsonp: false });
+
 var updateCalled = false;
 
 export default class alertScreenComponent extends React.Component {
@@ -187,27 +187,11 @@ export default class alertScreenComponent extends React.Component {
         lugar: this.state.lugar,
         description: this.state.descripcion,
       };
-      const options = {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-
-      fetch(ipv4 + "/alertas/" + this.state.pk_alerta, options)
-        .then((response) => {
-          if (response.status == 200) {
-            response.json().then(() => {
-              socket.disconnect();
-              alert("Actualización manual de la base de datos realizada");
-            });
-          } else {
-            alert("error interno, por favor intente más tarde");
-          }
-        })
-        .catch((err) => console.log(err));
+      
+      putAlert(data, this.state.pk_alerta, () => {
+        socket.disconnect();
+        alert("Actualización manual de la base de datos realizada");
+      });
     }
   };
 

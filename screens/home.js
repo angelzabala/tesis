@@ -3,6 +3,7 @@ import React from "react";
 import io from "socket.io-client/dist/socket.io";
 import * as Permissions from "expo-permissions";
 
+import { getAlerts, getSubscribedGroups } from "../actions/actions";
 import { format, subHours } from "date-fns";
 import {
   StyleSheet,
@@ -50,47 +51,18 @@ export default class HomeComponent extends React.Component {
   };
 
   userRecentAlerts = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(ipv4 + "/alertas/" + this.state.userPhoneNumber, options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ alerts: jsonObj });
-          });
-        } else if (response.status == 204) {
-          this.setState({ alerts: [] });
-        }
-      })
-      .catch((err) => console.log(err));
+    const alertsResponse = getAlerts(this.state.userPhoneNumber);
+    if (alertsResponse.fulfilled) {
+      this.setState({ alerts: alertsResponse.alertas });
+    }
   };
 
   userGroups = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(ipv4 + "/u-grupos/" + this.state.userPhoneNumber, options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ groupsNumber: jsonObj.length });
-            this.setState({ groups: jsonObj });
-          });
-        } else if (response.status == 204) {
-          console.log("no tiene grupos asociados");
-          this.setState({ groupsNumber: 0 });
-        }
-      })
-      .catch((err) => console.log(err));
+    const subscribedGroups = getSubscribedGroups(this.state.userPhoneNumber);
+    if (subscribedGroups.fulfilled) {
+      this.setState({ groupsNumber: subscribedGroups.groups.length });
+      this.setState({ groups: subscribedGroups.groups });
+    }
   };
 
   groupPressHandler = (groupId, isAdmin, groupName) => {
@@ -150,9 +122,7 @@ export default class HomeComponent extends React.Component {
   };
 
   checkPermissions = async () => {
-    const { status, permissions } = await Permissions.getAsync(
-      Permissions.LOCATION
-    );
+    const { status } = await Permissions.getAsync(Permissions.LOCATION);
     if (status !== "granted") {
       let response = await Permissions.askAsync(Permissions.LOCATION);
       response = response;

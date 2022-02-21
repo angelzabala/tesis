@@ -11,8 +11,8 @@ import {
   AsyncStorage,
   Dimensions,
 } from "react-native";
+import { postUsers } from "../actions/actions";
 
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class OptionalInfoComponent extends React.Component {
@@ -49,26 +49,13 @@ export default class OptionalInfoComponent extends React.Component {
       userReqData: userData.userReqData,
       userOptionalData: userData.userOptionalData,
     };
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch(ipv4 + "/usuarios", options)
-      .then((response) => {
-        if (response.status == 200) {
-          AsyncStorage.setItem(
-            "phone",
-            this.state.navigation.state.params.userData.phone
-          ).then(this.state.navigation.navigate("Home"));
-        } else {
-          alert("error interno, por favor intente más tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+    postUsers(data, () => {
+      AsyncStorage.setItem(
+        "phone",
+        this.state.navigation.state.params.userData.phone
+      ).then(this.state.navigation.navigate("Home"));
+    })
+    
   };
   render() {
     return (

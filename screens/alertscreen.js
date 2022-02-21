@@ -3,6 +3,7 @@ import React from "react";
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
+import { postAlert, putAlert } from "../actions/actions";
 import {
   Dimensions,
   StyleSheet,
@@ -13,14 +14,11 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   AsyncStorage,
-  Alert,
 } from "react-native";
 
-
-
-const ipv4 = require("../serverip.json").serverIp;
-const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
+const screenWidth = Math.round(Dimensions.get("window").width);
+const ipv4 = require("../serverip.json").serverIp;
 const socket = io(ipv4, { jsonp: false });
 
 export default class alertScreenComponent extends React.Component {
@@ -78,30 +76,13 @@ export default class alertScreenComponent extends React.Component {
       falsa: true,
     };
 
-    const options = {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    fetch(ipv4 + "/alertas/" + this.state.pk_alerta, options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then(() => {
-            this.setState({ falsa: true });
-            this.setState({ modalShow: false });
-            alert(
-              "se ha reportado esta alerta como falsa, se comunicara a los otros usuarios del grupo"
-            );
-          });
-        } else {
-          alert("error interno, por favor intente más tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+    putAlert(data, this.state.pk_alerta, () => {
+      this.setState({ falsa: true });
+      this.setState({ modalShow: false });
+      alert(
+        "se ha reportado esta alerta como falsa, se comunicara a los otros usuarios del grupo"
+      );
+    });
   };
 
   eventExitHandler = () => {
@@ -110,28 +91,12 @@ export default class alertScreenComponent extends React.Component {
       lugar: this.state.lugar,
       description: this.state.descripcion,
     };
-    const options = {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
 
-    fetch(ipv4 + "/alertas/" + this.state.pk_alerta, options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then(() => {
-            this.setState({ editable: false });
-            alert("se ha finalizado la alerta");
-            this.state.navigation.navigate("Home");
-          });
-        } else {
-          alert("error interno, por favor intente más tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+    putAlert(data, this.state.pk_alerta, () => {
+      this.setState({ editable: false });
+      alert("se ha finalizado la alerta");
+      this.state.navigation.navigate("Home");
+    });
   };
 
   insertAlert = () => {
@@ -143,45 +108,32 @@ export default class alertScreenComponent extends React.Component {
         latitud: this.state.navigation.state.params.latitud,
         longitud: this.state.navigation.state.params.longitud,
       };
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
 
-      fetch(ipv4 + "/alertas", options)
-        .then((response) => {
-          if (response.status == 200) {
-            response.json().then((jsonObj) => {
-              this.setState({ pk_alerta: jsonObj[0].pk_alerta });
-              this.setState({ hora: jsonObj[0].hora });
-              socket.emit("update", {
-                pk_alerta: this.state.pk_alerta,
-                usuario: this.state.navigation.state.params.fk_usuario,
-                fk_grupo: this.state.navigation.state.params.fk_grupo,
-                nivel: this.state.nivel,
-                latitud: this.state.navigation.state.params.latitud,
-                longitud: this.state.navigation.state.params.longitud,
-                estado: this.state.estado,
-                falsa: this.state.falsa,
-                lugar: this.state.lugar,
-                descripcion: this.state.descripcion,
-                nombreGrupo: this.state.navigation.state.params.nombreGrupo,
-                hora: this.state.hora,
-              });
+      const alertCreationResponse = postAlert(data);
+      if (alertCreationResponse.fulfilled) {
+        this.setState({ pk_alerta: alertCreationResponse.alerta.pk_alerta });
+        this.setState({ hora: alertCreationResponse.alerta.hora });
+        socket.emit("update", {
+          pk_alerta: this.state.pk_alerta,
+          usuario: this.state.navigation.state.params.fk_usuario,
+          fk_grupo: this.state.navigation.state.params.fk_grupo,
+          nivel: this.state.nivel,
+          latitud: this.state.navigation.state.params.latitud,
+          longitud: this.state.navigation.state.params.longitud,
+          estado: this.state.estado,
+          falsa: this.state.falsa,
+          lugar: this.state.lugar,
+          descripcion: this.state.descripcion,
+          nombreGrupo: this.state.navigation.state.params.nombreGrupo,
+          hora: this.state.hora,
+        });
 
-              socket.on("updateEmit", (data) => {
-                this.state.navigation.navigate("alertReceptionScreen", data);
-              });
-            });
-          } else {
-            alert("error interno, por favor intente más tarde");
-          }
-        })
-        .catch((err) => console.log(err));
+        socket.on("updateEmit", (data) => {
+          this.state.navigation.navigate("alertReceptionScreen", data);
+        });
+      } else {
+        alert("error interno, por favor intente más tarde");
+      }
     }
   };
 

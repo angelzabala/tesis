@@ -1,5 +1,6 @@
 import React from "react";
 
+import { postUser } from "../actions/actions";
 import {
   StyleSheet,
   Image,
@@ -9,8 +10,6 @@ import {
   TouchableWithoutFeedback,
   AsyncStorage,
 } from "react-native";
-
-const ipv4 = require("../serverip.json").serverIp;
 
 export default class LoginComponent extends React.Component {
   constructor(props) {
@@ -42,28 +41,12 @@ export default class LoginComponent extends React.Component {
       phone: this.state.phoneNumber,
       password: this.state.password,
     };
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch(ipv4 + "/usuario", options)
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then(() => {
-            AsyncStorage.setItem("phone", data.phone).then(() => {
-              this.subs.forEach((sub) => sub.remove());
-              this.state.navigation.navigate("Home");
-            });
-          });
-        } else if (response.status == 204) {
-          alert("usuario o contraseña incorrecta");
-        }
-      })
-      .catch((err) => console.log(err));
+    postUser(data, () => {
+      AsyncStorage.setItem("phone", data.phone).then(() => {
+        this.subs.forEach((sub) => sub.remove());
+        this.state.navigation.navigate("Home");
+      });
+    });
   };
 
   componentDidMount() {

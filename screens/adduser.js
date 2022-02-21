@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Picker } from "@react-native-community/picker";
+import { postUserGroups } from "../actions/actions";
 import {
   StyleSheet,
   TextInput,
@@ -12,8 +13,6 @@ import {
   Dimensions,
 } from "react-native";
 
-
-const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class addUserComponent extends React.Component {
@@ -74,7 +73,7 @@ export default class addUserComponent extends React.Component {
   };
 
   addUserHandler = () => {
-    const data = {
+    const user = {
       phoneNumber: this.state.selectedPhoneCode + this.state.phoneNumber,
       funcionario: this.state.funcionario,
       groupNumber: this.props.navigation.state.params.groupId,
@@ -83,25 +82,9 @@ export default class addUserComponent extends React.Component {
       notEmpty: true,
     };
 
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    fetch(ipv4 + "/u-grupos/" + AsyncStorage.getItem("phone"), options)
-      .then((response) => {
-        if (response.status == 200) {
-          alert("el usuario se ha agregado correctamente");
-          this.state.navigation.goBack();
-        } else {
-          alert("usuario no registrado");
-        }
-      })
-      .catch((err) => console.log(err));
+    postUserGroups(user, () => {
+      this.state.navigation.goBack();
+    });
   };
 
   render() {

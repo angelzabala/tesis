@@ -2,6 +2,7 @@ import React from "react";
 
 import * as Permissions from "expo-permissions";
 
+import { getUserGroups } from "../actions/actions";
 import {
   Dimensions,
   StyleSheet,
@@ -39,39 +40,20 @@ export default class groupDetailComponent extends React.Component {
     try {
       let phonenumber = await AsyncStorage.getItem("phone");
       this.setState({ phone: phonenumber });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+
     const data = {
       phone: this.state.phone,
       fk_grupo: state.params.groupId,
       isAdmin: state.params.isAdmin,
     };
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(
-      ipv4 +
-        "/u-grupos/" +
-        data.phone +
-        "/" +
-        data.fk_grupo +
-        "/" +
-        data.isAdmin,
-      options
-    )
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ users: jsonObj });
-          });
-        } else if (response.status == 204) {
-          alert("error interno");
-        }
-      })
-      .catch((err) => console.log(err));
+    const userGroupResponse = getUserGroups(data);
+    if(userGroupResponse.fulfilled){
+      this.setState({ users: userGroupResponse.users });
+    }
+    
   };
   adminLabel = (isadmin) => {
     if (isadmin) {
@@ -106,12 +88,10 @@ export default class groupDetailComponent extends React.Component {
         console.log(error);
       }
     );
-
-    //console.log('groupDetail', this.state.latitude, this.state.logintude);
   };
 
   checkPermissions = async () => {
-    const { status, permissions } = await Permissions.getAsync(
+    const { status } = await Permissions.getAsync(
       Permissions.LOCATION
     );
     if (status !== "granted") {
@@ -298,7 +278,7 @@ export default class groupDetailComponent extends React.Component {
             </TouchableWithoutFeedback>
           </View>
         </SafeAreaView>
-      ); //fin del return
+      );
     }
   }
 }

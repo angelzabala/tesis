@@ -12,7 +12,7 @@ export default class reportDetailComponent extends React.Component {
       navigation: this.props.navigation,
     };
   }
-
+ 
   wholeComponent = () => {
     if (this.state.reporte) {
       return (

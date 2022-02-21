@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-
-import { ScrollView } from "react-native-gesture-handler";
-import { BarChart } from "react-native-charts";
-import { format } from "date-fns";
 import {
   StyleSheet,
   Text,
@@ -12,7 +8,10 @@ import {
   FlatList,
   TouchableWithoutFeedback,
 } from "react-native";
-
+import { BarChart } from "react-native-charts";
+import { ScrollView } from "react-native-gesture-handler";
+import { format } from "date-fns";
+import { getGroupAlerts, getGroupReports } from "../actions/actions";
 
 const ipv4 = require("../serverip.json").serverIp;
 const screenWidth = Math.round(Dimensions.get("window").width);
@@ -33,56 +32,24 @@ export default class statisticsScreenComponent extends React.Component {
   }
 
   getAlertList = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(
-      ipv4 + "/alertas/grupo/" + this.state.navigation.state.params.fk_grupo,
-      options
-    )
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ alertas: jsonObj }, () => {
-              this.getReportList();
-            });
-          });
-        } else if (response.status == 204) {
-          console.log("error interno");
-        }
-      })
-      .catch((err) => console.log(err));
+    const groupAlertsResponse = getGroupAlerts(this.state.navigation.state.params.fk_grupo);
+    if(groupAlertsResponse.fulfilled){
+      this.setState({ alertas: groupAlertsResponse }, () => {
+        this.getReportList();
+      });
+    }
   };
 
   getReportList = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(
-      ipv4 + "/reportes/grupo/" + this.state.navigation.state.params.fk_grupo,
-      options
-    )
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            this.setState({ reportes: jsonObj }, () => {
-              this.updateAlertGraph();
-              this.reportListComponent();
-            });
-          });
-        } else if (response.status == 204) {
-          console.log("error interno");
-        }
-      })
-      .catch((err) => console.log(err));
+    const getReportsResponse = getGroupReports(
+      this.state.navigation.state.params.fk_grupo
+    );
+    if (getReportsResponse.fulfilled) {
+      this.setState({ reportes: getReportsResponse.reportes }, () => {
+        this.updateAlertGraph();
+        this.reportListComponent();
+      });
+    }
   };
 
   updateAlertGraph = () => {
@@ -147,6 +114,7 @@ export default class statisticsScreenComponent extends React.Component {
             keyExtractor={(item) => item.pk_alerta.toString()}
             renderItem={({ item }) => {
               let moment = new Date(item.hora);
+              //var formatMoment = format(date, "MMMM Do, YYYY H:mma");
               var formattedDate = format(moment, "dd/MMM/yyyy");
               var formattedHour = format(moment, "H:mma");
               return (

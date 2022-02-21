@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
-
+ 
 export default class RegisterComponent extends React.Component {
   constructor(props) {
     super(props);

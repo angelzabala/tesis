@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Picker } from "@react-native-community/picker";
+import { postReport } from "../actions/actions";
 import {
   StyleSheet,
   View,
@@ -12,10 +13,8 @@ import {
   TextInput,
 } from "react-native";
 
-
-const ipv4 = require("../serverip.json").serverIp;
-
 const screenWidth = Math.round(Dimensions.get("window").width);
+
 export default class addReportComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -83,27 +82,12 @@ export default class addReportComponent extends React.Component {
       fk_grupo: this.state.fk_grupo,
       fk_alerta: this.state.fk_alerta,
     };
-    const data = report;
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch(ipv4 + "/reportes", options)
-      .then((response) => {
-        if (response.status == 200) {
-          alert("el reporte se ha agregado correctamente");
-          this.state.navigation.navigate("statisticsScreen", {
-            fk_grupo: this.state.fk_grupo,
-          });
-        } else {
-          alert("error interno, por favor intente más tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+
+    postReport(report, () => {
+      this.state.navigation.navigate("statisticsScreen", {
+        fk_grupo: this.state.fk_grupo,
+      });
+    });
   };
 
   wholeComponent = () => {
@@ -122,13 +106,15 @@ export default class addReportComponent extends React.Component {
                 this.setState({ selectedDay: itemValue });
               }}
             >
-            <Picker.Item label="Día" value="" />
-              {Array.from(Array(31).keys()).map(value => <Picker.Item label={value+1} value={value+1} />)}
+              <Picker.Item label="Día" value="" />
+              {Array.from(Array(31).keys()).map((value) => (
+                <Picker.Item label={value + 1} value={value + 1} />
+              ))}
             </Picker>
             <Picker
               selectedValue={this.state.selectedMonth}
               style={styles.picker}
-              onValueChange={(itemValue, itemIndex) => {
+              onValueChange={(itemValue) => {
                 this.setState({ selectedMonth: itemValue });
               }}
             >
@@ -173,7 +159,9 @@ export default class addReportComponent extends React.Component {
               }}
             >
               <Picker.Item label="Hora" value="" />
-              {Array.from(Array(12).keys()).map(value => <Picker.Item label={value+1} value={value+1} />)}
+              {Array.from(Array(12).keys()).map((value) => (
+                <Picker.Item label={value + 1} value={value + 1} />
+              ))}
             </Picker>
             <Picker
               selectedValue={this.state.selectedMinute}
@@ -183,7 +171,9 @@ export default class addReportComponent extends React.Component {
               }}
             >
               <Picker.Item label="Minuto" value="" />
-              {Array.from(Array(60).keys()).map(value => <Picker.Item label={value+1} value={value+1} />)}
+              {Array.from(Array(60).keys()).map((value) => (
+                <Picker.Item label={value + 1} value={value + 1} />
+              ))}
             </Picker>
             <Picker
               selectedValue={this.state.selectedMeridiem}
@@ -295,7 +285,9 @@ export default class addReportComponent extends React.Component {
               }}
             >
               <Picker.Item label="Edad de la víctima" value="" />
-              {Array.from(Array(100).keys()).map(value => <Picker.Item label={value} value={value} />)}
+              {Array.from(Array(100).keys()).map((value) => (
+                <Picker.Item label={value} value={value} />
+              ))}
             </Picker>
           </View>
           <Text style={styles.reportCategoryTitle}>Delincuentes</Text>
@@ -383,6 +375,7 @@ export default class addReportComponent extends React.Component {
       </ScrollView>
     );
   };
+
   componentDidMount() {
     this.storageData();
     this.subs = [

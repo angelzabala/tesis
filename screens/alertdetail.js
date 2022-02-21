@@ -1,6 +1,7 @@
 import React from "react";
 
 import MapView, { Marker } from "react-native-maps";
+import { getAlert } from "../actions/actions";
 import { format, subHours } from "date-fns";
 import {
   Dimensions,
@@ -14,12 +15,8 @@ import {
   Linking,
 } from "react-native";
 
-
-
-const ipv4 = require("../serverip.json").serverIp;
-const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
-var fetched = false;
+const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class alertScreenComponent extends React.Component {
   constructor(props) {
@@ -161,33 +158,13 @@ export default class alertScreenComponent extends React.Component {
   };
 
   getAlertData = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(
-      ipv4 + "/alerta/" + this.state.navigation.state.params.pk_alerta,
-      options
-    )
-      .then((response) => {
-        if (response.status == 200) {
-          response.json().then((jsonObj) => {
-            if (fetched == false) {
-              fetched = true;
-              this.setState({ alerta: jsonObj[0] });
-            }
-          });
-        } else if (response.status == 204) {
-          alert("error interno, intente mas tarde");
-        }
-      })
-      .catch((err) => console.log(err));
+    const alertResponse = getAlert(this.state.navigation.state.params.pk_alerta);
+    if(alertResponse.fulfilled){
+      this.setState({ alerta: alertResponse.alerta });
+    }
   };
 
-  sendReport = (fk_alerta) => {
+  sendReport = () => {
     this.state.navigation.navigate("addReportScreen", {
       alerta: this.state.alerta,
     });
