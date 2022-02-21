@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Picker } from "@react-native-community/picker";
-import { postReport } from "../actions/actions";
+import { postReports } from "../actions/actions";
 import {
   StyleSheet,
   View,
@@ -83,7 +83,7 @@ export default class addReportComponent extends React.Component {
       fk_alerta: this.state.fk_alerta,
     };
 
-    postReport(report, () => {
+    postReports(report, () => {
       this.state.navigation.navigate("statisticsScreen", {
         fk_grupo: this.state.fk_grupo,
       });

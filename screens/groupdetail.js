@@ -2,7 +2,7 @@ import React from "react";
 
 import * as Permissions from "expo-permissions";
 
-import { getUserGroups } from "../actions/actions";
+import { getGroupUsers } from "../actions/actions";
 import {
   Dimensions,
   StyleSheet,
@@ -49,7 +49,7 @@ export default class groupDetailComponent extends React.Component {
       fk_grupo: state.params.groupId,
       isAdmin: state.params.isAdmin,
     };
-    const userGroupResponse = getUserGroups(data);
+    const userGroupResponse = getGroupUsers(data);
     if(userGroupResponse.fulfilled){
       this.setState({ users: userGroupResponse.users });
     }

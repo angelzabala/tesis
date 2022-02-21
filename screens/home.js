@@ -3,7 +3,7 @@ import React from "react";
 import io from "socket.io-client/dist/socket.io";
 import * as Permissions from "expo-permissions";
 
-import { getAlerts, getSubscribedGroups } from "../actions/actions";
+import { getAlerts, getUserGroups } from "../actions/actions";
 import { format, subHours } from "date-fns";
 import {
   StyleSheet,
@@ -58,7 +58,7 @@ export default class HomeComponent extends React.Component {
   };
 
   userGroups = () => {
-    const subscribedGroups = getSubscribedGroups(this.state.userPhoneNumber);
+    const subscribedGroups = getUserGroups(this.state.userPhoneNumber);
     if (subscribedGroups.fulfilled) {
       this.setState({ groupsNumber: subscribedGroups.groups.length });
       this.setState({ groups: subscribedGroups.groups });

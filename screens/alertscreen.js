@@ -3,7 +3,7 @@ import React from "react";
 import io from "socket.io-client/dist/socket.io";
 import Modal from "react-native-modal";
 
-import { postAlert, putAlert } from "../actions/actions";
+import { postAlerts, putAlert } from "../actions/actions";
 import {
   Dimensions,
   StyleSheet,
@@ -109,7 +109,7 @@ export default class alertScreenComponent extends React.Component {
         longitud: this.state.navigation.state.params.longitud,
       };
 
-      const alertCreationResponse = postAlert(data);
+      const alertCreationResponse = postAlerts(data);
       if (alertCreationResponse.fulfilled) {
         this.setState({ pk_alerta: alertCreationResponse.alerta.pk_alerta });
         this.setState({ hora: alertCreationResponse.alerta.hora });

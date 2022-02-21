@@ -3,7 +3,7 @@ const app = express();
 const server = require("http").createServer(app);
 
 const bodyParser = require("body-parser");
-const db = require("./queries");
+const db = require("./databaseActions");
 const path = require("path");
 
 const socketOptions = {
@@ -43,19 +43,19 @@ app.get("/", (request, response) => {
 });
 
 app.post("/usuario/", db.logUser);
-app.post("/usuarios", db.newUser);
+app.post("/usuarios", db.postUsers);
 
-app.get("/u-grupos/:user", db.userGroups);
-app.get("/u-grupos/:phone/:group/:admin", db.groupUsers);
-app.post("/u-grupos/:user", db.createUserGroup);
+app.get("/u-grupos/:user", db.getUserGroups);
+app.get("/u-grupos/:phone/:group/:admin", db.getGroupUsers);
+app.post("/u-grupos/:user", db.postUserGroups);
 
-app.post("/grupos", db.createGroup);
+app.post("/grupos", db.postGroups);
 
-app.get("/alertas/:user", db.recentUserAlerts);
-app.get("/alerta/:pk_alerta", db.getAlertData);
+app.get("/alertas/:user", db.getUserAlerts);
+app.get("/alerta/:pk_alerta", db.getAlert);
 app.get("/alertas/grupo/:fk_grupo", db.getGroupAlerts);
-app.post("/alertas", db.createAlert);
-app.put("/alertas/:pk_alerta", db.modifyAlert);
+app.post("/alertas", db.postAlerts);
+app.put("/alertas/:pk_alerta", db.putAlert);
 
 app.get("/reportes/grupo/:fk_grupo", db.getGroupReports);
-app.post("/reportes", db.addReport);
+app.post("/reportes", db.postReports);

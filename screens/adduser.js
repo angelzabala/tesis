@@ -82,7 +82,7 @@ export default class addUserComponent extends React.Component {
       notEmpty: true,
     };
 
-    postUserGroups(user, () => {
+    postUserGroups(user, AsyncStorage.getItem("phone"), () => {
       this.state.navigation.goBack();
     });
   };

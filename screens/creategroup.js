@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { postGroup } from "../actions/actions";
+import { postGroups } from "../actions/actions";
 import {
   StyleSheet,
   TextInput,
@@ -46,7 +46,7 @@ export default class createGroupComponent extends React.Component {
       groupCreator: this.state.groupCreator,
     };
 
-    postGroup(data,this.state, () => {
+    postGroups(data,this.state, () => {
       alert(
         "El grupo " +
           this.state.groupName +

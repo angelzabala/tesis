@@ -1,12 +1,16 @@
 const ipv4 = require("../serverip.json").serverIp;
 
-export const postReport = (data, successFn) => {
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
+
+export const postReports = (data, successFn) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/reportes", options)
@@ -21,23 +25,22 @@ export const postReport = (data, successFn) => {
     .catch((err) => console.log(err));
 };
 
-export const postUserGroups = (data, successFn) => {
+export const postUserGroups = (data, phoneNumber, successFn) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
 
-  fetch(ipv4 + "/u-grupos/" + AsyncStorage.getItem("phone"), options)
+  fetch(ipv4 + "/u-grupos/" + phoneNumber, options)
     .then((response) => {
       if (response.status == 200) {
         alert("el usuario se ha agregado correctamente");
         successFn();
-      } else {
+      } else if(response.status == 204){
         alert("usuario no registrado");
+      }else{
+        alert("error interno, por favor intente más tarde");
       }
     })
     .catch((err) => console.log(err));
@@ -46,10 +49,7 @@ export const postUserGroups = (data, successFn) => {
 export const getAlerts = (userPhoneNumber) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
   fetch(ipv4 + "/alertas/" + userPhoneNumber, options)
     .then((response) => {
@@ -67,10 +67,7 @@ export const getAlerts = (userPhoneNumber) => {
 export const getAlert = (alertPk) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
 
   fetch(ipv4 + "/alerta/" + alertPk, options)
@@ -79,7 +76,7 @@ export const getAlert = (alertPk) => {
         response.json().then((jsonObj) => {
           return { fulfilled: true, alerta: jsonObj[0] };
         });
-      } else if (response.status == 204) {
+      } else{
         alert("error interno, por favor intente más tarde");
       }
     })
@@ -91,10 +88,7 @@ export const getAlert = (alertPk) => {
 export const putAlert = (data, alertPk, successFn) => {
   const options = {
     method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
 
@@ -111,13 +105,10 @@ export const putAlert = (data, alertPk, successFn) => {
     .catch((err) => console.log(err));
 };
 
-export const postAlert = (data) => {
+export const postAlerts = (data) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
 
@@ -134,13 +125,10 @@ export const postAlert = (data) => {
     .catch((err) => console.log(err));
 };
 
-export const postGroup = (data, state, successFn) => {
+export const postGroups = (data, state, successFn) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
 
@@ -155,10 +143,7 @@ export const postGroup = (data, state, successFn) => {
           };
           const options = {
             method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
+            ...headers, 
             body: JSON.stringify(data2),
           };
           fetch(ipv4 + "/u-grupos/" + state.groupCreator, options).then(
@@ -182,13 +167,10 @@ export const postGroup = (data, state, successFn) => {
     .catch((err) => console.log(err));
 };
 
-export const getUserGroups = (data) => {
+export const getGroupUsers = (data) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
   fetch(
     data.phone &&
@@ -202,26 +184,23 @@ export const getUserGroups = (data) => {
     options
   )
     .then((response) => {
-      if (response.status == 200) {
+      if (response.status == 200 || response.status == 204) {
         response.json().then((jsonObj) => {
           return { fulfilled: true, users: jsonObj };
         });
-      } else if (response.status == 204) {
+      } else if (response.status == 500) {
         alert("error interno");
       }
     })
     .catch((err) => console.log(err));
 };
 
-export const getSubscribedGroups = (data) => {
+export const getUserGroups = (userPhoneNumber) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
-  fetch(ipv4 + "/u-grupos/" + data, options)
+  fetch(ipv4 + "/u-grupos/" + userPhoneNumber, options)
     .then((response) => {
       if (response.status == 200 || response.status == 204) {
         response.json().then((jsonObj) => {
@@ -237,10 +216,7 @@ export const getSubscribedGroups = (data) => {
 export const getGroupReports = (grupo) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
   fetch(ipv4 + "/reportes/grupo/" + grupo, options)
     .then((response) => {
@@ -258,10 +234,7 @@ export const getGroupReports = (grupo) => {
 export const postUser = (data, successFn) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/usuario", options)
@@ -272,6 +245,8 @@ export const postUser = (data, successFn) => {
         });
       } else if (response.status == 204) {
         alert("usuario o contraseña incorrecta");
+      }else{
+        alert("error interno, por favor intente más tarde");
       }
     })
     .catch((err) => console.log(err));
@@ -280,10 +255,7 @@ export const postUser = (data, successFn) => {
 export const postUsers = (data, successFn) => {
   const options = {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
     body: JSON.stringify(data),
   };
   fetch(ipv4 + "/usuarios", options)
@@ -300,22 +272,16 @@ export const postUsers = (data, successFn) => {
 export const getGroupAlerts = (grupo) => {
   const options = {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    ...headers, 
   };
-  fetch(
-    ipv4 + "/alertas/grupo/" + grupo,
-    options
-  )
+  fetch(ipv4 + "/alertas/grupo/" + grupo, options)
     .then((response) => {
-      if (response.status == 200) {
+      if (response.status == 200 || response.status == 204) {
         response.json().then((jsonObj) => {
-        return{fulfilled: true, alertas: jsonObj};
+          return { fulfilled: true, alertas: jsonObj };
         });
-      } else if (response.status == 204) {
-        console.log("error interno");
+      } else{
+        alert("error interno, por favor intente más tarde");
       }
     })
     .catch((err) => console.log(err));
