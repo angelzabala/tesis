@@ -15,7 +15,7 @@
     "date-fns": "^2.14.0",
     "expo": "~37.0.3",
     "expo-permissions": "~8.1.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "os": "^0.1.1",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
